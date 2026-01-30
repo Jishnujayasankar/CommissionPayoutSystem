@@ -41,7 +41,7 @@ class CommissionService
      * - Level 2 commission fails (network/DB error)
      * - Result: Sale exists, only 1 commission exists (data inconsistency)
      */
-    public function updateSaleAndRecalculate($userId, $saleAmount)
+    public function processSaleWithCommissions($userId, $saleAmount)
     {
         if ($saleAmount <= 0) {
             throw new \InvalidArgumentException('Sale amount must be greater than 0');
@@ -129,7 +129,7 @@ class CommissionService
      * - New commission creation fails
      * - Result: Sale is $500 but no commissions exist (users lost $210)
      */
-    public function processSaleWithCommissions($saleId, $newAmount)
+    public function updateSaleAndRecalculate($saleId, $newAmount)
     {
 
         if ($newAmount < 0) {

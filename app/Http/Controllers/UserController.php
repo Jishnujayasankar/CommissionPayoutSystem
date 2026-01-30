@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Commission;
 use App\Services\CommissionService;
 use Illuminate\Support\Facades\DB;
 
@@ -119,9 +120,18 @@ class UserController extends Controller
     // Foreign keys automatically delete related sales and commissions
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete(); // Single DELETE - atomic by default
-        return redirect()->route('dashboard')->with('success', 'User deleted successfully!');
+        try {
+            DB::beginTransaction();
+            $user = User::findOrFail($id);
+            $user->delete(); // Single DELETE - atomic by default
+    
+            DB::commit();
+            return redirect()->route('dashboard')->with('success', 'User deleted successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('dashboard')->with('error', 'User deletion failed: ' . $e->getMessage());
+        }
+
     }
 
     // Update sale amount and recalculate commissions
