@@ -59,10 +59,10 @@ class CommissionService
             $currentUser = User::find($userId);
             $level = 1;
 
-            while ($currentUser && $currentUser->fk_bint_parent_id && isset($commissionRates[$level])) {
+            while ($currentUser && $currentUser->fk_bint_parent_id) {
                 $parentUser = User::find($currentUser->fk_bint_parent_id);
                 
-                if ($parentUser) {
+                if ($parentUser && isset($commissionRates[$level])) {
                     $percentage = $commissionRates[$level];
                     $commissionAmount = ($saleAmount * $percentage) / 100;
 
@@ -74,11 +74,9 @@ class CommissionService
                         'dec_amount' => $commissionAmount,
                     ]);
 
-                    $currentUser = $parentUser;
-                    $level++;
-                } else {
-                    break;
-                }
+                } 
+                $currentUser = $parentUser;
+                $level++;
             }
 
             DB::commit();
@@ -148,10 +146,10 @@ class CommissionService
                 $currentUser = User::find($sale->fk_bint_user_id);
                 $level = 1;
 
-                while ($currentUser && $currentUser->fk_bint_parent_id && isset($commissionRates[$level])) {
+                while ($currentUser && $currentUser->fk_bint_parent_id) {
                     $parentUser = User::find($currentUser->fk_bint_parent_id);
                     
-                    if ($parentUser) {
+                    if ($parentUser && isset($commissionRates[$level])) {
                         $percentage = $commissionRates[$level];
                         $commissionAmount = ($newAmount * $percentage) / 100;
 
@@ -163,11 +161,9 @@ class CommissionService
                             'dec_amount' => $commissionAmount,
                         ]);
 
-                        $currentUser = $parentUser;
-                        $level++;
-                    } else {
-                        break;
-                    }
+                    } 
+                    $currentUser = $parentUser;
+                    $level++;
                 }
             }
             
