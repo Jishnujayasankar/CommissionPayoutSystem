@@ -37,7 +37,7 @@
                             @endif
                         </td>
                         <td>
-                            <select name="bool_active" style="padding: 0.5rem; background: rgba(0,0,0,0.3); border: 1px solid #4da6ff; border-radius: 5px; color: #fff;">
+                            <select name="bool_active" style="padding: 0.5rem; background: rgba(0,0,0,0.3); border: 1px solid #4da6ff; border-radius: 5px; color: #fff;" disabled="{{ $hasCommissions ? 'disabled' : '' }}">
                                 <option value="1" {{ $level->bool_active ? 'selected' : '' }}>Active</option>
                                 <option value="0" {{ !$level->bool_active ? 'selected' : '' }}>Inactive</option>
                             </select>

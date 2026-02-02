@@ -55,8 +55,9 @@
         • Level 2: 5%<br>
         • Level 3: 3%<br>
         • Level 4: 2%<br>
-        • Level 5: 1%<br><br>
-        <strong style="color: #4da6ff;">Note:</strong> Commissions are distributed up to 5 levels in the hierarchy.
+        • Level 5: 1%<br>
+        • <a style="color: #aaa;text-decoration: none;margin-right: 2rem;border-radius: 5px;transition: all 0.3s;" href="{{ route('commission-levels.index') }}">Add more commission Levels</a><br>
+        <strong style="color: #4da6ff;">Note:</strong> Initially Commissions are distributed up to 5 levels in the hierarchy.
     </p>
 </div>
 @endsection
